@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NeuralSphere } from "@/components/ui/neural-sphere";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/user-store";
 import { BrainCircuit, PenTool, BugOff, Cpu, LineChart, Target, Zap, Microscope, Users, Clock, Monitor } from "lucide-react";
 
 // Questions Database
@@ -42,19 +43,20 @@ const questions = [
   }
 ];
 
-const loadingTexts = [
-  "Analyzing behavioral patterns...",
-  "Mapping cognitive preferences...",
-  "Aligning with industry domains...",
-  "Calibrating simulation parameters...",
-  "Initializing your future..."
-];
-
 export default function DiscoveryPage() {
+  const { name } = useUserStore();
   const [currentStep, setCurrentStep] = useState(0);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loadingTextIndex, setLoadingTextIndex] = useState(0);
   const router = useRouter();
+
+  const loadingTexts = React.useMemo(() => [
+    `Analyzing your strengths, ${name || "User"}...`,
+    "Mapping cognitive preferences...",
+    "Aligning with industry domains...",
+    "Calibrating simulation parameters...",
+    "Initializing your future..."
+  ], [name]);
 
   const handleOptionClick = () => {
     if (currentStep < questions.length - 1) {
@@ -80,7 +82,7 @@ export default function DiscoveryPage() {
         clearTimeout(redirectTimeout);
       };
     }
-  }, [isAnalyzing, router]);
+  }, [isAnalyzing, router, loadingTexts.length]);
 
   const progressPercentage = ((currentStep) / questions.length) * 100;
 

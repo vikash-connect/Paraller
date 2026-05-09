@@ -6,10 +6,12 @@ import { TypewriterEffect } from "@/components/ui/typewriter-effect";
 import { GlowingButton } from "@/components/ui/glowing-button";
 import { Terminal, ShieldAlert, Cpu, CheckCircle2, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useUserStore } from "@/store/user-store";
 
 type Phase = "PRESENTATION" | "DECISION" | "CONSEQUENCE" | "SUMMARY";
 
 export default function SimulationPage() {
+  const { name } = useUserStore();
   const sim = simulations.cybersecurity; // Hardcoded to cybersecurity for now
   
   const [currentScenarioIdx, setCurrentScenarioIdx] = useState(0);
@@ -128,7 +130,7 @@ export default function SimulationPage() {
           <div className="bg-black/40 border border-white/10 p-6 rounded-2xl backdrop-blur-md min-h-[120px] shadow-[inset_0_0_20px_rgba(255,255,255,0.02)]">
             <p className="text-lg md:text-xl text-neutral-200 leading-relaxed font-mono">
               <TypewriterEffect 
-                text={scenario.description} 
+                text={currentScenarioIdx === 0 ? `Ready for your simulation, ${name || "Agent"}? \n\n${scenario.description}` : scenario.description} 
                 speed={20} 
                 onComplete={handlePresentationComplete} 
               />

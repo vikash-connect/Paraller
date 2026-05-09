@@ -6,6 +6,7 @@ import { StatsBar } from "@/components/ui/stats-bar";
 import { GlowingButton } from "@/components/ui/glowing-button";
 import { ShieldAlert, Zap, Cpu, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useUserStore } from "@/store/user-store";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -21,6 +22,8 @@ const itemVariants: Variants = {
 };
 
 export default function ResultPage() {
+  const { name } = useUserStore();
+
   return (
     <div className="bg-[#050505] min-h-screen text-white font-sans overflow-x-hidden relative">
       {/* Background Gradients */}
@@ -91,7 +94,7 @@ export default function ResultPage() {
                 <Cpu className="text-primary" size={24} /> Personality Insights
               </h3>
               <p className="text-lg text-neutral-300 leading-relaxed mb-6">
-                “Your decision-making style shows <strong className="text-white">strong analytical and investigative tendencies</strong>. You thrive in high-stakes environments where logical deduction and system-level thinking are required to solve complex, hidden problems.”
+                “{name ? `${name}, your` : 'Your'} decision-making style shows <strong className="text-white">strong analytical and investigative tendencies</strong>. You thrive in high-stakes environments where logical deduction and system-level thinking are required to solve complex, hidden problems.”
               </p>
               
               <div className="mt-8">

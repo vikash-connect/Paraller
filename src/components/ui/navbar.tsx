@@ -63,7 +63,7 @@ export function Navbar() {
           <Link href="/#timeline" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-300">
             Careers
           </Link>
-          <Link href="/discovery" className="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors duration-300 relative group">
+          <Link href="/onboarding" className="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors duration-300 relative group">
             Start Simulation
             <div className="absolute -bottom-1 left-0 w-0 h-px bg-cyan-400 group-hover:w-full transition-all duration-300" />
           </Link>

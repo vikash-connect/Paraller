@@ -64,7 +64,7 @@ export default function Home() {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="pt-4 flex flex-col sm:flex-row items-center gap-4"
           >
-            <Link href="/discovery">
+            <Link href="/onboarding">
               <GlowingButton>
                 Enter Simulation
               </GlowingButton>
