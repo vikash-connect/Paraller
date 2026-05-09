@@ -23,42 +23,58 @@ export default function Home() {
         <FloatingParticles />
         <motion.div
           style={{ y: yHeroText, opacity: opacityHero }}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.3,
-            duration: 0.8,
-            ease: "easeInOut",
-          }}
           className="relative flex flex-col gap-6 items-center justify-center px-4 text-center z-10 w-full"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 text-sm font-medium text-muted-foreground">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 text-sm font-medium text-muted-foreground"
+          >
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
             Simulate your future.
-          </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold dark:text-white text-center font-heading tracking-tight leading-tight max-w-5xl">
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-4xl md:text-6xl lg:text-7xl font-bold dark:text-white text-center font-heading tracking-tight leading-[1.15] max-w-5xl"
+          >
             What if you could <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-emerald-400 animate-gradient">
               experience your future
             </span>{" "}
             <br />
             before choosing it?
-          </h1>
-          <p className="font-light text-base md:text-xl text-neutral-300 py-4 max-w-2xl mx-auto leading-relaxed">
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="font-light text-base md:text-xl text-neutral-400 py-4 max-w-2xl mx-auto leading-relaxed"
+          >
             Parallel helps students explore real technology careers through immersive AI-powered simulations.
-          </p>
-          <div className="pt-8 flex flex-col sm:flex-row items-center gap-4">
+          </motion.p>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="pt-4 flex flex-col sm:flex-row items-center gap-4"
+          >
             <Link href="/discovery">
               <GlowingButton>
                 Enter Simulation
               </GlowingButton>
             </Link>
             <Link href="#timeline">
-              <button className="px-8 py-3 rounded-full font-semibold text-white border border-white/20 hover:bg-white/5 transition-colors duration-300 backdrop-blur-sm">
+              <button className="px-8 py-3 rounded-full font-semibold text-white border border-white/20 hover:bg-white/10 transition-colors duration-300 backdrop-blur-sm">
                 Explore Careers
               </button>
             </Link>
-          </div>
+          </motion.div>
           
           <motion.div 
             initial={{ opacity: 0 }}
