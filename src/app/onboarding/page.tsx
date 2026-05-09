@@ -8,7 +8,7 @@ import { GlowingButton } from "@/components/ui/glowing-button";
 import { Terminal, ChevronRight, User, BookOpen, GraduationCap, Target, Sparkles } from "lucide-react";
 import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 
-type Step = "INIT" | "NAME" | "NAME_CONFIRM" | "CLASS" | "STREAM" | "CAREER" | "INTERESTS" | "COMPLETE";
+type Step = "INIT" | "NAME" | "NAME_LOADING" | "NAME_CONFIRM" | "CLASS" | "STREAM" | "CAREER" | "INTERESTS" | "COMPLETE";
 
 const INTEREST_OPTIONS = [
   "Coding", "Design", "Business", "Security", "AI/ML", 
@@ -44,7 +44,7 @@ export default function OnboardingPage() {
     e.preventDefault();
     if (!tempInput.trim()) return;
     setName(tempInput.trim());
-    handleNext("NAME_CONFIRM");
+    handleNext("NAME_LOADING");
   };
 
   const handleCareerSubmit = (e: React.FormEvent) => {
@@ -119,6 +119,41 @@ export default function OnboardingPage() {
                 </motion.form>
               )}
             </AnimatePresence>
+          </div>
+        );
+
+      case "NAME_LOADING":
+        return (
+          <div className="flex flex-col items-center gap-8 py-12">
+            <div className="relative w-24 h-24">
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 border-2 border-primary/20 border-t-primary rounded-full"
+              />
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-4 bg-primary/20 rounded-full blur-xl"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-2 h-2 bg-primary rounded-full animate-ping" />
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <TypewriterEffect 
+                text="Initializing your future profile..." 
+                speed={40} 
+                className="text-lg font-mono text-primary uppercase tracking-[0.2em]" 
+                onComplete={() => setTimeout(() => handleNext("NAME_CONFIRM"), 1500)}
+              />
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+                className="h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent w-48 opacity-50"
+              />
+            </div>
           </div>
         );
 
