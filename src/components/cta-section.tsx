@@ -2,6 +2,7 @@
 import React from "react";
 import { GlowingButton } from "./ui/glowing-button";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export function CTASection() {
   return (
@@ -40,9 +41,11 @@ export function CTASection() {
           viewport={{ once: true }}
           transition={{ delay: 0.2, type: "spring" }}
         >
-          <GlowingButton className="px-12 py-5 text-lg">
-            Initialize Sequence
-          </GlowingButton>
+          <Link href="/discovery">
+            <GlowingButton className="px-12 py-5 text-lg">
+              Initialize Sequence
+            </GlowingButton>
+          </Link>
         </motion.div>
       </div>
     </section>

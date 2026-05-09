@@ -9,6 +9,7 @@ import { TimelinePreview } from "@/components/timeline-preview";
 import { CTASection } from "@/components/cta-section";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const { scrollY } = useScroll();
@@ -47,12 +48,16 @@ export default function Home() {
             Parallel helps students explore real technology careers through immersive AI-powered simulations.
           </p>
           <div className="pt-8 flex flex-col sm:flex-row items-center gap-4">
-            <GlowingButton>
-              Enter Simulation
-            </GlowingButton>
-            <button className="px-8 py-3 rounded-full font-semibold text-white border border-white/20 hover:bg-white/5 transition-colors duration-300 backdrop-blur-sm">
-              Explore Careers
-            </button>
+            <Link href="/discovery">
+              <GlowingButton>
+                Enter Simulation
+              </GlowingButton>
+            </Link>
+            <Link href="#timeline">
+              <button className="px-8 py-3 rounded-full font-semibold text-white border border-white/20 hover:bg-white/5 transition-colors duration-300 backdrop-blur-sm">
+                Explore Careers
+              </button>
+            </Link>
           </div>
           
           <motion.div 

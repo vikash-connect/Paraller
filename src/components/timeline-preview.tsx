@@ -45,7 +45,7 @@ export function TimelinePreview() {
           Your Future <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">Timeline</span>
         </h2>
         <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-          See exactly how you'll progress from a curious student to an industry-ready professional.
+          See exactly how you&apos;ll progress from a curious student to an industry-ready professional.
         </p>
       </div>
 

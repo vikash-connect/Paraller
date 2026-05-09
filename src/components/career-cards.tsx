@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion, Variants } from "framer-motion";
-import { BrainCircuit, ShieldAlert, Code2, Server, Database, Palette } from "lucide-react";
+import { BrainCircuit, ShieldAlert, Code2, Database, Palette } from "lucide-react";
 
 const careers = [
   {

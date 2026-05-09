@@ -29,7 +29,7 @@ export const FloatingParticles = () => {
       vy: (Math.random() - 0.5) * 0.1,
       opacity: Math.random() * 0.5 + 0.1,
     }));
-    
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setParticles(newParticles);
 
     let animationFrameId: number;
@@ -37,13 +37,15 @@ export const FloatingParticles = () => {
     const animate = () => {
       setParticles((prevParticles) =>
         prevParticles.map((p) => {
-          let newX = p.x + p.vx;
-          let newY = p.y + p.vy;
+          let newVx = p.vx;
+          let newVy = p.vy;
+          const newX = p.x + newVx;
+          const newY = p.y + newVy;
 
-          if (newX < 0 || newX > 100) p.vx *= -1;
-          if (newY < 0 || newY > 100) p.vy *= -1;
+          if (newX < 0 || newX > 100) newVx *= -1;
+          if (newY < 0 || newY > 100) newVy *= -1;
 
-          return { ...p, x: newX, y: newY };
+          return { ...p, x: newX, y: newY, vx: newVx, vy: newVy };
         })
       );
       animationFrameId = requestAnimationFrame(animate);
