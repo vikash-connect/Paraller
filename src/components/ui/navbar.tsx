@@ -2,11 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useUserStore } from "@/store/user-store";
 
 export function Navbar() {
+  const pathname = usePathname();
   const { name } = useUserStore();
   const [scrolled, setScrolled] = useState(false);
+  
+  const isOnboarding = pathname === "/onboarding";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,7 +42,7 @@ export function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-10">
-          {["Simulations", "Specializations", "Timeline", "DNA"].map((item) => (
+          {!isOnboarding && ["Simulations", "Specializations", "Timeline", "DNA"].map((item) => (
             <Link 
               key={item} 
               href={`/${item.toLowerCase()}`}
@@ -47,20 +51,35 @@ export function Navbar() {
               {item}
             </Link>
           ))}
+          
+          {isOnboarding && (
+            <div className="flex items-center gap-4">
+              <div className="h-[2px] w-32 bg-white/10 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: "0%" }}
+                  animate={{ width: "40%" }} // This should ideally be dynamic based on onboarding steps
+                  className="h-full bg-primary"
+                />
+              </div>
+              <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Calibration in progress</span>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-6">
-          {name ? (
-            <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-mono text-white tracking-widest">{name.toUpperCase()}</span>
-            </div>
-          ) : (
-            <Link href="/onboarding">
-              <button className="px-6 py-2 rounded-full bg-white text-black text-xs font-bold hover:bg-neutral-200 transition-all uppercase tracking-widest">
-                Initialize
-              </button>
-            </Link>
+          {!isOnboarding && (
+            name ? (
+              <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <span className="text-xs font-mono text-white tracking-widest">{name.toUpperCase()}</span>
+              </div>
+            ) : (
+              <Link href="/onboarding">
+                <button className="px-6 py-2 rounded-full bg-white text-black text-xs font-bold hover:bg-neutral-200 transition-all uppercase tracking-widest">
+                  Initialize
+                </button>
+              </Link>
+            )
           )}
         </div>
       </div>
