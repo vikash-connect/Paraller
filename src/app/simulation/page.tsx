@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useUserStore } from "@/store/user-store";
 import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 import { AIReflectionPanel } from "@/components/ui/ai-reflection-panel";
+import { getMidMissionCoach } from "@/utils/ai-logic";
 
 type Phase = "PRESENTATION" | "ACKNOWLEDGE" | "DECISION" | "PROCESSING" | "CONSEQUENCE" | "REFLECTION" | "SUMMARY";
 
@@ -39,6 +40,7 @@ export default function SimulationPage() {
     
     // Simulate AI Processing delay
     setTimeout(() => {
+      useUserStore.getState().logDecision(choice.trait, "cybersecurity");
       setCollectedTraits(prev => [...prev, choice.trait]);
       setPhase("CONSEQUENCE");
     }, 2000);
@@ -184,7 +186,7 @@ export default function SimulationPage() {
                   className="flex flex-col gap-10 mt-8"
                 >
                   <AIMentorBubble 
-                    message={`Analyze the vectors, ${name}. Every decision carries a consequence for the infrastructure. What is your response?`}
+                    message={getMidMissionCoach(name || "Agent", useUserStore.getState().decisionHistory)}
                     speed={25}
                     className="max-w-xl mx-auto"
                   />

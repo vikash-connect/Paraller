@@ -17,6 +17,11 @@ interface UserState {
   dreamCareer: string;
   interests: string[];
   decisionDNA: DNAMetrics;
+  decisionHistory: {
+    trait: string;
+    timestamp: number;
+    careerId: string;
+  }[];
   setName: (name: string) => void;
   setClassLevel: (level: string) => void;
   setStream: (stream: string) => void;
@@ -24,6 +29,7 @@ interface UserState {
   addInterest: (interest: string) => void;
   removeInterest: (interest: string) => void;
   updateDNA: (metrics: Partial<DNAMetrics>) => void;
+  logDecision: (trait: string, careerId: string) => void;
 }
 
 const initialDNA: DNAMetrics = {
@@ -43,6 +49,7 @@ export const useUserStore = create<UserState>((set) => ({
   dreamCareer: "",
   interests: [],
   decisionDNA: initialDNA,
+  decisionHistory: [],
   setName: (name) => set({ name }),
   setClassLevel: (classLevel) => set({ classLevel }),
   setStream: (stream) => set({ stream }),
@@ -56,5 +63,12 @@ export const useUserStore = create<UserState>((set) => ({
   updateDNA: (newMetrics) =>
     set((state) => ({
       decisionDNA: { ...state.decisionDNA, ...newMetrics },
+    })),
+  logDecision: (trait, careerId) =>
+    set((state) => ({
+      decisionHistory: [
+        ...state.decisionHistory,
+        { trait, careerId, timestamp: Date.now() },
+      ],
     })),
 }));

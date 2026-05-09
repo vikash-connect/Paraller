@@ -12,6 +12,7 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useUserStore } from "@/store/user-store";
 import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
+import { getContextualGreeting } from "@/utils/ai-logic";
 
 export default function Home() {
   const { name } = useUserStore();
@@ -36,7 +37,7 @@ export default function Home() {
               className="mb-8 w-full max-w-lg"
             >
               <AIMentorBubble 
-                message={`Welcome back, ${name}. Your future timeline is waiting for its next decision. Ready to resume the simulation?`}
+                message={getContextualGreeting(name, useUserStore.getState().decisionDNA, useUserStore.getState().decisionHistory)}
                 speed={25}
               />
             </motion.div>
