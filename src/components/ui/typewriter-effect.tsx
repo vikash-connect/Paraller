@@ -1,49 +1,41 @@
 "use client";
 import React, { useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useUserStore } from "@/store/user-store";
+import { motion } from "framer-motion";
 
 interface TypewriterProps {
   text: string;
-  speed?: number; // Not used in word-reveal but kept for prop compatibility
-  delay?: number; // initial delay before starting
+  speed?: number; // Kept for backward compatibility
+  delay?: number; // ms before reveal
   onComplete?: () => void;
   className?: string;
 }
 
 export function TypewriterEffect({ text, delay = 0, onComplete, className = "" }: TypewriterProps) {
-  const { isDemoMode } = useUserStore();
-  const words = text.split(" ");
-  
-  // Calculate timing based on demo mode
-  const staggerDuration = isDemoMode ? 0.05 : 0.15;
-  const initialDelay = isDemoMode ? delay / 4000 : delay / 1000;
-
   useEffect(() => {
     if (onComplete) {
-      const totalDuration = (initialDelay + (words.length * staggerDuration)) * 1000 + 500;
-      const timer = setTimeout(onComplete, totalDuration);
+      const timer = setTimeout(onComplete, delay + 400); // 400ms is the duration of our animation
       return () => clearTimeout(timer);
     }
-  }, [text, words.length, staggerDuration, initialDelay, onComplete]);
+  }, [text, delay, onComplete]);
 
   return (
-    <div className={`flex flex-wrap gap-x-1.5 gap-y-0.5 ${className}`}>
-      {words.map((word, i) => (
-        <motion.span
-          key={`${text}-${i}`}
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.3,
-            delay: initialDelay + i * staggerDuration,
-            ease: "easeOut"
-          }}
-          className="inline-block"
-        >
-          {word}
-        </motion.span>
-      ))}
-    </div>
+    <motion.div
+      key={text}
+      initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      transition={{ 
+        duration: 0.4, 
+        delay: delay / 1000, 
+        ease: [0.23, 1, 0.32, 1] // Custom quint ease for premium feel
+      }}
+      className={className}
+    >
+      {text}
+      <motion.span
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        className="inline-block w-[2px] h-[1.1em] bg-primary ml-2 align-middle shadow-[0_0_8px_rgba(6,182,212,0.5)]"
+      />
+    </motion.div>
   );
 }
