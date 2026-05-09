@@ -15,48 +15,66 @@ export function TypewriterEffect({ text, speed = 20, delay = 0, onComplete, clas
   const { isDemoMode } = useUserStore();
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const animationStarted = useRef(false);
-  const textRef = useRef(text);
+  const [typingComplete, setTypingComplete] = useState(false);
   
+  // Use refs to track animation state across renders without triggering effects
+  const animationStarted = useRef(false);
+  const currentTextRef = useRef("");
+  const timeoutIds = useRef<NodeJS.Timeout[]>([]);
+
   const effectiveSpeed = isDemoMode ? Math.max(1, speed / 4) : speed;
 
+  // Cleanup helper
+  const clearAllTimers = () => {
+    timeoutIds.current.forEach(id => {
+      clearTimeout(id);
+      clearInterval(id as unknown as number);
+    });
+    timeoutIds.current = [];
+  };
+
   useEffect(() => {
-    // If text changes, we reset the flag to allow re-typing the new message
-    if (textRef.current !== text) {
-      textRef.current = text;
+    // Reset if the text actually changed
+    if (currentTextRef.current !== text) {
+      clearAllTimers();
+      currentTextRef.current = text;
       animationStarted.current = false;
       setDisplayedText("");
+      setIsTyping(false);
+      setTypingComplete(false);
     }
 
+    // Guard against duplicate runs in Strict Mode or re-renders
     if (animationStarted.current) return;
     animationStarted.current = true;
 
-    let currentIndex = 0;
-    let intervalId: NodeJS.Timeout;
-
     const startTyping = () => {
       setIsTyping(true);
-      intervalId = setInterval(() => {
-        setDisplayedText(text.slice(0, currentIndex + 1));
-        currentIndex++;
+      let charIndex = 0;
+      
+      const intervalId = setInterval(() => {
+        charIndex++;
+        setDisplayedText(text.slice(0, charIndex));
 
-        if (currentIndex >= text.length) {
+        if (charIndex >= text.length) {
           clearInterval(intervalId);
           setIsTyping(false);
-          if (onComplete) {
-            // Short delay after completion before triggering callback
-            setTimeout(onComplete, 150);
-          }
+          setTypingComplete(true);
+          
+          const completionTimer = setTimeout(() => {
+            if (onComplete) onComplete();
+          }, 500); // 500ms pause after completion as requested
+          timeoutIds.current.push(completionTimer);
         }
       }, effectiveSpeed);
+      
+      timeoutIds.current.push(intervalId as unknown as NodeJS.Timeout);
     };
 
-    const delayId = setTimeout(startTyping, delay);
+    const initialDelayId = setTimeout(startTyping, delay);
+    timeoutIds.current.push(initialDelayId);
 
-    return () => {
-      clearTimeout(delayId);
-      if (intervalId) clearInterval(intervalId);
-    };
+    return () => clearAllTimers();
   }, [text, delay, onComplete, effectiveSpeed]);
 
   return (
