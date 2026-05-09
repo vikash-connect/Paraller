@@ -15,7 +15,7 @@ import { getMidMissionCoach } from "@/utils/ai-logic";
 type Phase = "PRESENTATION" | "ACKNOWLEDGE" | "DECISION" | "PROCESSING" | "CONSEQUENCE" | "REFLECTION" | "SUMMARY";
 
 export default function SimulationPage() {
-  const { name } = useUserStore();
+  const { name, isDemoMode } = useUserStore();
   const sim = simulations.cybersecurity; // Hardcoded to cybersecurity for now
   
   const [currentScenarioIdx, setCurrentScenarioIdx] = useState(0);
@@ -43,7 +43,7 @@ export default function SimulationPage() {
       useUserStore.getState().logDecision(choice.trait, "cybersecurity");
       setCollectedTraits(prev => [...prev, choice.trait]);
       setPhase("CONSEQUENCE");
-    }, 2000);
+    }, isDemoMode ? 500 : 2000);
   };
 
   const handleNext = () => {

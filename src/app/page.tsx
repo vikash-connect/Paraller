@@ -15,7 +15,7 @@ import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 import { getContextualGreeting } from "@/utils/ai-logic";
 
 export default function Home() {
-  const { name } = useUserStore();
+  const { name, setDemoMode, isDemoMode } = useUserStore();
   const { scrollY } = useScroll();
   const yHeroText = useTransform(scrollY, [0, 1000], [0, 400]);
   const opacityHero = useTransform(scrollY, [0, 500], [1, 0]);
@@ -141,6 +141,14 @@ export default function Home() {
         <p className="text-muted-foreground font-light text-sm">
           © {new Date().getFullYear()} Parallel. Building the future of career discovery.
         </p>
+        <div 
+          onClick={() => {
+            setDemoMode(!isDemoMode);
+            alert(`Demo Mode: ${!isDemoMode ? "ON" : "OFF"}`);
+          }}
+          className="absolute bottom-4 right-4 w-4 h-4 bg-transparent cursor-help"
+          title="Toggle System Calibration"
+        />
       </footer>
     </div>
   );

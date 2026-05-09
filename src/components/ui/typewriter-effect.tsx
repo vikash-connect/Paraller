@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useUserStore } from "@/store/user-store";
 
 interface TypewriterProps {
   text: string;
@@ -11,8 +12,12 @@ interface TypewriterProps {
 }
 
 export function TypewriterEffect({ text, speed = 30, delay = 0, onComplete, className = "" }: TypewriterProps) {
+  const { isDemoMode } = useUserStore();
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  
+  // Speed up typing in demo mode
+  const effectiveSpeed = isDemoMode ? Math.max(1, speed / 4) : speed;
 
   useEffect(() => {
     // Reset state when text changes
@@ -35,7 +40,7 @@ export function TypewriterEffect({ text, speed = 30, delay = 0, onComplete, clas
           setIsTyping(false);
           if (onComplete) onComplete();
         }
-      }, speed);
+      }, effectiveSpeed);
 
       // Store interval ID in timeoutId to clear on unmount (hacky, but works for cleanup)
       timeoutId = intervalId as unknown as NodeJS.Timeout;

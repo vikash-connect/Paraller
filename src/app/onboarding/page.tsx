@@ -17,7 +17,7 @@ const INTEREST_OPTIONS = [
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { name, interests, setName, setClassLevel, setStream, setDreamCareer, addInterest, removeInterest } = useUserStore();
+  const { name, isDemoMode, interests, setName, setClassLevel, setStream, setDreamCareer, addInterest, removeInterest } = useUserStore();
   
   const [step, setStep] = useState<Step>("INIT");
   const [showInput, setShowInput] = useState(false);
@@ -29,10 +29,10 @@ export default function OnboardingPage() {
       const timer = setTimeout(() => {
         setStep("NAME");
         setShowInput(false);
-      }, 2500);
+      }, isDemoMode ? 500 : 2500);
       return () => clearTimeout(timer);
     }
-  }, [step]);
+  }, [step, isDemoMode]);
 
   const handleNext = (nextStep: Step) => {
     setShowInput(false);
@@ -224,7 +224,7 @@ export default function OnboardingPage() {
                     <GlowingButton 
                       onClick={() => {
                         setStep("COMPLETE");
-                        setTimeout(() => router.push("/discovery"), 3000);
+                        setTimeout(() => router.push("/discovery"), isDemoMode ? 1000 : 3000);
                       }}
                       disabled={interests.length === 0}
                     >

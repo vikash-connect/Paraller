@@ -30,6 +30,8 @@ interface UserState {
   removeInterest: (interest: string) => void;
   updateDNA: (metrics: Partial<DNAMetrics>) => void;
   logDecision: (trait: string, careerId: string) => void;
+  isDemoMode: boolean;
+  setDemoMode: (enabled: boolean) => void;
 }
 
 const initialDNA: DNAMetrics = {
@@ -50,6 +52,7 @@ export const useUserStore = create<UserState>((set) => ({
   interests: [],
   decisionDNA: initialDNA,
   decisionHistory: [],
+  isDemoMode: false,
   setName: (name) => set({ name }),
   setClassLevel: (classLevel) => set({ classLevel }),
   setStream: (stream) => set({ stream }),
@@ -71,4 +74,5 @@ export const useUserStore = create<UserState>((set) => ({
         { trait, careerId, timestamp: Date.now() },
       ],
     })),
+  setDemoMode: (isDemoMode) => set({ isDemoMode }),
 }));
