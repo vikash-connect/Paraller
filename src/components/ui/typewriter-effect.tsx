@@ -11,53 +11,53 @@ interface TypewriterProps {
   className?: string;
 }
 
-export function TypewriterEffect({ text, speed = 30, delay = 0, onComplete, className = "" }: TypewriterProps) {
+export function TypewriterEffect({ text, speed = 20, delay = 0, onComplete, className = "" }: TypewriterProps) {
   const { isDemoMode } = useUserStore();
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const lastProcessedText = useRef("");
+  const animationStarted = useRef(false);
+  const textRef = useRef(text);
   
-  // Speed up typing in demo mode
   const effectiveSpeed = isDemoMode ? Math.max(1, speed / 4) : speed;
 
   useEffect(() => {
-    // Prevent double-typing if the text is exactly the same as what we just typed
-    if (text === lastProcessedText.current && displayedText === text) {
-      return;
+    // If text changes, we reset the flag to allow re-typing the new message
+    if (textRef.current !== text) {
+      textRef.current = text;
+      animationStarted.current = false;
+      setDisplayedText("");
     }
 
-    lastProcessedText.current = text;
-    setDisplayedText("");
-    setIsTyping(false);
+    if (animationStarted.current) return;
+    animationStarted.current = true;
 
     let currentIndex = 0;
-    let timeoutId: NodeJS.Timeout;
+    let intervalId: NodeJS.Timeout;
 
     const startTyping = () => {
       setIsTyping(true);
-      const intervalId = setInterval(() => {
-        if (currentIndex < text.length - 1) {
-          setDisplayedText((prev) => prev + text[currentIndex]);
-          currentIndex++;
-        } else {
-          setDisplayedText(text); // Ensure full text is set
+      intervalId = setInterval(() => {
+        setDisplayedText(text.slice(0, currentIndex + 1));
+        currentIndex++;
+
+        if (currentIndex >= text.length) {
           clearInterval(intervalId);
           setIsTyping(false);
-          if (onComplete) onComplete();
+          if (onComplete) {
+            // Short delay after completion before triggering callback
+            setTimeout(onComplete, 150);
+          }
         }
       }, effectiveSpeed);
-
-      // Store interval ID in timeoutId to clear on unmount (hacky, but works for cleanup)
-      timeoutId = intervalId as unknown as NodeJS.Timeout;
     };
 
     const delayId = setTimeout(startTyping, delay);
 
     return () => {
       clearTimeout(delayId);
-      if (timeoutId) clearInterval(timeoutId as unknown as number);
+      if (intervalId) clearInterval(intervalId);
     };
-  }, [text, delay, onComplete, effectiveSpeed, displayedText]);
+  }, [text, delay, onComplete, effectiveSpeed]);
 
   return (
     <span className={className}>
