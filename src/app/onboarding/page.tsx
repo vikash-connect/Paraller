@@ -8,7 +8,7 @@ import { GlowingButton } from "@/components/ui/glowing-button";
 import { Terminal, ChevronRight, User, BookOpen, GraduationCap, Target, Sparkles } from "lucide-react";
 import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 
-type Step = "INIT" | "NAME" | "NAME_LOADING" | "NAME_CONFIRM" | "CLASS" | "STREAM" | "CAREER" | "INTERESTS" | "COMPLETE";
+type Step = "INIT" | "NAME" | "NAME_LOADING" | "NAME_CONFIRM" | "INTERESTS" | "STYLE" | "COMPLETE";
 
 const INTEREST_OPTIONS = [
   "Coding", "Design", "Business", "Security", "AI/ML", 
@@ -29,7 +29,7 @@ export default function OnboardingPage() {
       const timer = setTimeout(() => {
         setStep("NAME");
         setShowInput(false);
-      }, isDemoMode ? 500 : 2500);
+      }, isDemoMode ? 300 : 800);
       return () => clearTimeout(timer);
     }
   }, [step, isDemoMode]);
@@ -65,10 +65,8 @@ export default function OnboardingPage() {
   const getStepNumber = () => {
     switch (step) {
       case "NAME": return 1;
-      case "CLASS": return 2;
-      case "STREAM": return 3;
-      case "CAREER": return 4;
-      case "INTERESTS": return 5;
+      case "INTERESTS": return 2;
+      case "STYLE": return 3;
       default: return 0;
     }
   };
@@ -143,9 +141,9 @@ export default function OnboardingPage() {
             <div className="flex flex-col items-center gap-2">
               <TypewriterEffect 
                 text="Initializing your future profile..." 
-                speed={40} 
+                speed={20} 
                 className="text-lg font-mono text-primary uppercase tracking-[0.2em]" 
-                onComplete={() => setTimeout(() => handleNext("NAME_CONFIRM"), 1500)}
+                onComplete={() => setTimeout(() => handleNext("NAME_CONFIRM"), 500)}
               />
               <motion.div 
                 initial={{ width: 0 }}
@@ -162,100 +160,9 @@ export default function OnboardingPage() {
           <div className="flex flex-col max-w-xl w-full gap-8">
             <AIMentorBubble 
               message={`It's a pleasure to meet you, ${name}. I'm initializing your neural profile now.`}
-              speed={25}
-              onComplete={() => setTimeout(() => handleNext("CLASS"), 1500)}
+              speed={20}
+              onComplete={() => setTimeout(() => handleNext("INTERESTS"), 800)}
             />
-          </div>
-        );
-
-      case "CLASS":
-        return (
-          <div className="flex flex-col max-w-xl w-full gap-8">
-            <AIMentorBubble 
-              message={`It's a pleasure to meet you, ${name}. To tailor your experience, I need to know your current academic level.`}
-              speed={25}
-              onComplete={() => setShowInput(true)}
-            />
-            <AnimatePresence>
-              {showInput && (
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-2 gap-4">
-                  {["Class 11", "Class 12", "Other"].map((cls) => (
-                    <button
-                      key={cls}
-                      onClick={() => { setClassLevel(cls); handleNext("STREAM"); }}
-                      className="p-6 text-xl bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-cyan-400/50 transition-all font-medium"
-                    >
-                      {cls}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-
-      case "STREAM":
-        return (
-          <div className="flex flex-col max-w-xl w-full gap-8">
-            <AIMentorBubble 
-              message={`Understood. And which academic stream are you pursuing, ${name}? This helps me understand your foundational strengths.`}
-              speed={25}
-              onComplete={() => setShowInput(true)}
-            />
-            <AnimatePresence>
-              {showInput && (
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {["Science", "Commerce", "Arts"].map((str) => (
-                    <button
-                      key={str}
-                      onClick={() => { setStream(str); handleNext("CAREER"); }}
-                      className="p-6 text-lg bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-emerald-400/50 transition-all font-medium"
-                    >
-                      {str}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-
-      case "CAREER":
-        return (
-          <div className="flex flex-col max-w-xl w-full gap-8">
-            <AIMentorBubble 
-              message={`We all have a vision of the future. ${name}, what is your dream career field at this moment?`}
-              speed={25}
-              onComplete={() => setShowInput(true)}
-            />
-            <AnimatePresence>
-              {showInput && (
-                <motion.form 
-                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                  onSubmit={handleCareerSubmit} 
-                  className="relative group"
-                >
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-20 group-focus-within:opacity-50 transition duration-500" />
-                  <div className="relative flex flex-col gap-4 p-2 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-2xl">
-                    <input
-                      type="text"
-                      autoFocus
-                      value={tempInput}
-                      onChange={(e) => setTempInput(e.target.value)}
-                      placeholder="e.g. Software Engineer, AI Specialist..."
-                      className="bg-transparent outline-none px-4 py-4 text-xl md:text-2xl text-white placeholder:text-white/20 font-light"
-                    />
-                    {tempInput.trim() && (
-                      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-end p-2">
-                        <button type="submit" className="px-6 py-2 bg-white text-black rounded-xl font-bold flex items-center gap-2 hover:bg-neutral-200 transition-all text-sm uppercase tracking-widest">
-                          Continue <ChevronRight size={16} />
-                        </button>
-                      </motion.div>
-                    )}
-                  </div>
-                </motion.form>
-              )}
-            </AnimatePresence>
           </div>
         );
 
@@ -263,8 +170,8 @@ export default function OnboardingPage() {
         return (
           <div className="flex flex-col max-w-2xl w-full gap-8">
             <AIMentorBubble 
-              message={`Last question for now, ${name}. Tell me what excites you. Select up to 3 core interests to help me tailor your discovery simulation.`}
-              speed={25}
+              message={`Tell me what excites you, ${name}. Select up to 3 core interests to help me tailor your discovery simulation.`}
+              speed={20}
               onComplete={() => setShowInput(true)}
             />
             <AnimatePresence>
@@ -290,15 +197,48 @@ export default function OnboardingPage() {
                   </div>
                   <div className="flex justify-end border-t border-white/10 pt-6">
                     <GlowingButton 
-                      onClick={() => {
-                        setStep("COMPLETE");
-                        setTimeout(() => router.push("/discovery"), isDemoMode ? 1000 : 3000);
-                      }}
+                      onClick={() => handleNext("STYLE")}
                       disabled={interests.length === 0}
                     >
-                      Finalise Profile <ChevronRight size={18} className="ml-2 inline" />
+                      Next Step <ChevronRight size={18} className="ml-2 inline" />
                     </GlowingButton>
                   </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+
+      case "STYLE":
+        return (
+          <div className="flex flex-col max-w-2xl w-full gap-8">
+            <AIMentorBubble 
+              message="Finally, how do you prefer to approach challenges?"
+              speed={20}
+              onComplete={() => setShowInput(true)}
+            />
+            <AnimatePresence>
+              {showInput && (
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[
+                    { id: "LOGICAL", label: "Structured & Logical", trait: "Analytical Thinking" },
+                    { id: "CREATIVE", label: "Creative & Intuitive", trait: "Creativity" },
+                    { id: "LEAD", label: "Collaborative & Leading", trait: "Leadership" },
+                    { id: "SOLO", label: "Focused & Independent", trait: "Self-Reliance" }
+                  ].map((option) => (
+                    <button
+                      key={option.id}
+                      onClick={() => {
+                        useUserStore.getState().logDecision(option.trait, "onboarding");
+                        setStep("COMPLETE");
+                        setTimeout(() => router.push("/discovery"), isDemoMode ? 500 : 1500);
+                      }}
+                      className="p-6 text-left bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-primary/50 transition-all font-medium group"
+                    >
+                      <div className="text-lg text-white mb-1 group-hover:text-primary transition-colors">{option.label}</div>
+                      <div className="text-xs text-neutral-500 font-mono uppercase tracking-widest">{option.trait}</div>
+                    </button>
+                  ))}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -335,7 +275,7 @@ export default function OnboardingPage() {
           >
             <span className="text-[10px] font-mono tracking-[0.3em] text-primary uppercase">Neural Sync Active</span>
             <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest">
-              Step <span className="text-white">{getStepNumber()}</span> of 5
+              Step <span className="text-white">{getStepNumber()}</span> of 3
             </span>
           </motion.div>
         )}
