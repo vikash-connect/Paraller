@@ -62,6 +62,17 @@ export default function OnboardingPage() {
     }
   };
 
+  const getStepNumber = () => {
+    switch (step) {
+      case "NAME": return 1;
+      case "CLASS": return 2;
+      case "STREAM": return 3;
+      case "CAREER": return 4;
+      case "INTERESTS": return 5;
+      default: return 0;
+    }
+  };
+
   const renderContent = () => {
     switch (step) {
       case "INIT":
@@ -278,6 +289,23 @@ export default function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-[#020202] text-white flex flex-col items-center justify-center px-6 relative overflow-hidden">
+      {/* Progress Indicator */}
+      <AnimatePresence>
+        {getStepNumber() > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2"
+          >
+            <span className="text-[10px] font-mono tracking-[0.3em] text-primary uppercase">Neural Sync Active</span>
+            <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest">
+              Step <span className="text-white">{getStepNumber()}</span> of 5
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Dynamic Background Noise */}
       <div className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/cubes.png')] opacity-[0.03] mix-blend-overlay pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] bg-cyan-500/5 blur-[150px] rounded-full pointer-events-none" />
