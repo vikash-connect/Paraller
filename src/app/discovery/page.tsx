@@ -71,8 +71,8 @@ export default function DiscoveryPage() {
       }, 1200);
 
       const redirectTimeout = setTimeout(() => {
-        // Redirect back home for now, as planned
-        router.push("/");
+        // Redirect to result page after analyzing
+        router.push("/result");
       }, 6500);
 
       return () => {
