@@ -120,7 +120,7 @@ export default function ResultPage() {
               </p>
               
               <div className="relative z-10">
-                <Link href="/">
+                <Link href="/simulation">
                   <GlowingButton className="w-full sm:w-auto px-8 py-4 text-lg shadow-[0_0_30px_rgba(6,182,212,0.3)]">
                     Enter Career Simulation <ChevronRight className="inline ml-2" />
                   </GlowingButton>
