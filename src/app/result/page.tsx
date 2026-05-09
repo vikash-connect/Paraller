@@ -8,6 +8,7 @@ import { ShieldAlert, Zap, Cpu, ChevronRight, Dna } from "lucide-react";
 import Link from "next/link";
 import { useUserStore } from "@/store/user-store";
 import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
+import { SkillRoadmap } from "@/components/ui/skill-roadmap";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -147,6 +148,17 @@ export default function ResultPage() {
                 </div>
             </motion.div>
           </div>
+        </motion.div>
+
+        {/* Actionable Roadmap Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1 }}
+          className="mt-32 pt-32 border-t border-white/5"
+        >
+          <SkillRoadmap careerId="cybersecurity" />
         </motion.div>
       </main>
     </div>
