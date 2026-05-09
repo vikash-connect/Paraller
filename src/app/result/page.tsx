@@ -4,7 +4,7 @@ import { motion, Variants } from "framer-motion";
 import { RadarChart } from "@/components/ui/radar-chart";
 import { StatsBar } from "@/components/ui/stats-bar";
 import { GlowingButton } from "@/components/ui/glowing-button";
-import { ShieldAlert, Zap, Cpu, ChevronRight } from "lucide-react";
+import { ShieldAlert, Zap, Cpu, ChevronRight, Dna } from "lucide-react";
 import Link from "next/link";
 import { useUserStore } from "@/store/user-store";
 import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
@@ -132,13 +132,19 @@ export default function ResultPage() {
                 The demand for cybersecurity experts is growing exponentially. In the simulation, you will step into the shoes of a Junior Analyst at a top tech firm, defending against live cyber attacks.
               </p>
               
-              <div className="relative z-10">
-                <Link href="/simulation">
-                  <GlowingButton className="w-full sm:w-auto px-8 py-4 text-lg shadow-[0_0_30px_rgba(6,182,212,0.3)]">
-                    Enter Career Simulation <ChevronRight className="inline ml-2" />
-                  </GlowingButton>
-                </Link>
-              </div>
+                <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10">
+                  <Link href="/simulation" className="w-full sm:w-auto">
+                    <GlowingButton className="w-full px-8 py-4 text-lg shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                      Enter Career Simulation <ChevronRight className="inline ml-2" />
+                    </GlowingButton>
+                  </Link>
+                  <Link href="/decision-dna" className="w-full sm:w-auto">
+                    <button className="w-full px-8 py-4 rounded-full font-semibold text-white border border-primary/30 bg-primary/10 hover:bg-primary/20 transition-all flex items-center justify-center gap-2 group backdrop-blur-md">
+                      <Dna className="text-primary group-hover:rotate-180 transition-transform duration-700" size={20} />
+                      Decode Decision DNA
+                    </button>
+                  </Link>
+                </div>
             </motion.div>
           </div>
         </motion.div>
