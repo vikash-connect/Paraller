@@ -55,13 +55,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold dark:text-white text-center font-heading tracking-tight leading-[1.15] max-w-5xl"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold dark:text-white text-center font-heading tracking-tight leading-[1.1] max-w-4xl"
           >
             What if you could <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-emerald-400 animate-gradient">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-emerald-400">
               experience your future
             </span>{" "}
-            <br />
             before choosing it?
           </motion.h1>
           
@@ -104,10 +103,12 @@ export default function Home() {
       </AuroraBackground>
 
       {/* Features Section */}
-      <FeaturesSection />
+      <div className="py-48">
+        <FeaturesSection />
+      </div>
 
       {/* Career Paths Section */}
-      <section className="py-32 relative bg-black">
+      <section className="py-48 relative bg-black">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(50,50,255,0.05)_0%,black_70%)] pointer-events-none"></div>
         <div className="text-center mb-20 relative z-10 px-4">
           <motion.h2 
@@ -127,7 +128,9 @@ export default function Home() {
       </section>
 
       {/* Timeline Section */}
-      <TimelinePreview />
+      <div className="py-48">
+        <TimelinePreview />
+      </div>
 
       {/* Final CTA Section */}
       <CTASection />

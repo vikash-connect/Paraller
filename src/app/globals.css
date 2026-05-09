@@ -113,7 +113,24 @@
 }
 
 .font-heading {
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+h1, .text-h1 {
+  @apply text-4xl md:text-5xl lg:text-6xl font-bold font-heading;
+}
+
+h2, .text-h2 {
+  @apply text-3xl md:text-4xl lg:text-5xl font-bold font-heading;
+}
+
+h3, .text-h3 {
+  @apply text-2xl md:text-3xl font-bold font-heading;
+}
+
+p {
+  @apply leading-relaxed opacity-90;
 }
 
 /* Lenis Smooth Scroll CSS */
