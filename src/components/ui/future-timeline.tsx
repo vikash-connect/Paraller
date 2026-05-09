@@ -1,57 +1,67 @@
 "use client";
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Calendar, DollarSign, Home, Briefcase, TrendingUp } from "lucide-react";
+import { Calendar, DollarSign, Home, TrendingUp, Heart, AlertCircle, MapPin } from "lucide-react";
 
 const milestones = [
   {
     year: "2026",
-    title: "Foundational Learning",
-    role: "Computer Science Student",
-    salary: "$0 - $20k (Part-time)",
-    lifestyle: "Dorm life, late-night coding, hackathons",
-    environment: "University labs, remote study",
-    growth: "Building core programming and networking skills.",
+    title: "The Genesis",
+    role: "Core Foundations",
+    salary: "$0 - $20k",
+    lifestyle: "Late nights, shared dorms, high caffeine, and pure curiosity.",
+    environment: "University Labs & Global Hackathons",
+    growth: "Mastering the fundamentals of logic and secure architectures.",
+    outcome: "The thrill of seeing your first complex system come to life.",
+    challenge: "Managing the steep learning curve of advanced cryptography.",
     color: "from-blue-500 to-cyan-400"
   },
   {
     year: "2028",
     title: "The Breakthrough",
-    role: "Cybersecurity Intern",
-    salary: "$40k - $60k (Pro-rated)",
-    lifestyle: "First apartment, networking, fast-paced learning",
-    environment: "Hybrid startup environment",
-    growth: "Learning to use enterprise security tools in real-time.",
+    role: "Junior Security Strategist",
+    salary: "$50k - $75k",
+    lifestyle: "First apartment in a tech hub, hybrid freedom, expanding network.",
+    environment: "Hyper-growth Fintech Startup",
+    growth: "Real-world incident response and defensive engineering.",
+    outcome: "Confidence building as you stop your first live production breach.",
+    challenge: "Handling the high-velocity pressure of a startup launch.",
     color: "from-cyan-400 to-emerald-400"
   },
   {
     year: "2030",
-    title: "Industry Entry",
-    role: "Junior SOC Analyst",
-    salary: "$85k - $110k",
-    lifestyle: "Stable income, building savings, city living",
-    environment: "Corporate Security Operations Center (On-site)",
-    growth: "Handling active alerts, incident response fundamentals.",
+    title: "Industry Impact",
+    role: "Senior Security Architect",
+    salary: "$120k - $160k",
+    lifestyle: "Financial stability, travel-ready, premium workspace setup.",
+    environment: "Global Cybersecurity Firm (Hybrid/Remote)",
+    growth: "Designing resilient systems for millions of users.",
+    outcome: "The pride of knowing your code protects global financial privacy.",
+    challenge: "Balancing complex security needs with seamless user experience.",
     color: "from-emerald-400 to-yellow-400"
   },
   {
     year: "2033",
-    title: "Career Specialization",
-    role: "Senior Threat Hunter",
-    salary: "$140k - $180k+",
-    lifestyle: "Homeownership, traveling, work-life balance",
-    environment: "Remote-first, high autonomy",
-    growth: "Leading incident investigations and mentoring juniors.",
+    title: "Mastery & Vision",
+    role: "Principal Security Consultant",
+    salary: "$200k - $280k+",
+    lifestyle: "Homeownership, family-first flexibility, high autonomy.",
+    environment: "Boutique Consultancy / Remote Global",
+    growth: "High-level strategic advisory and mentoring next-gen talent.",
+    outcome: "Respect as a thought leader in the international security space.",
+    challenge: "Communicating deeply technical risks to non-technical executives.",
     color: "from-yellow-400 to-orange-500"
   },
   {
     year: "2035",
-    title: "Mastery & Leadership",
-    role: "Director of Security / CISO",
-    salary: "$250k+",
-    lifestyle: "Financial independence, speaking at conferences",
-    environment: "Executive suite, global strategy",
-    growth: "Shaping company-wide security culture and infrastructure.",
+    title: "Legacy & Leadership",
+    role: "CISO / Founder",
+    salary: "$350k+ Equity",
+    lifestyle: "True financial independence, philanthropy, mentorship.",
+    environment: "The Boardroom / Your Own Studio",
+    growth: "Defining the future of ethical and secure technology.",
+    outcome: "The fulfillment of a career built on protecting and empowering people.",
+    challenge: "Staying ahead of AI-driven threats in a hyper-connected world.",
     color: "from-orange-500 to-red-500"
   }
 ];
@@ -101,65 +111,96 @@ export function FutureTimeline() {
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-                className={`ml-16 md:ml-0 w-full md:w-[45%] ${isEven ? 'md:mr-auto md:pr-12' : 'md:ml-auto md:pl-12'}`}
+                className={`ml-16 md:ml-0 w-full md:w-[50%] ${isEven ? 'md:mr-auto md:pr-16' : 'md:ml-auto md:pl-16'}`}
               >
                 <motion.div 
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
-                  className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-xl relative overflow-hidden group shadow-2xl"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] hover:border-white/30 transition-all duration-500 backdrop-blur-xl relative overflow-hidden group shadow-2xl"
                 >
                   <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${milestone.color}`} />
                   
                   {/* Header */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="px-3 py-1 bg-white/10 rounded-full flex items-center gap-2">
-                      <Calendar size={14} className="text-cyan-400" />
-                      <span className="text-sm font-mono font-bold text-white tracking-wider">{milestone.year}</span>
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="px-4 py-2 bg-white/5 rounded-2xl flex items-center gap-2 border border-white/10">
+                      <Calendar size={14} className="text-primary" />
+                      <span className="text-sm font-mono font-bold text-white">{milestone.year}</span>
                     </div>
-                    <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">{milestone.title}</span>
+                    <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500">{milestone.title}</span>
                   </div>
 
-                  <h3 className="text-2xl md:text-3xl font-bold font-heading text-white mb-6">
+                  <h3 className="text-3xl font-bold font-heading text-white mb-8 tracking-tight">
                     {milestone.role}
                   </h3>
 
                   {/* Details Grid */}
-                  <div className="grid grid-cols-1 gap-4 text-sm font-mono">
-                    <div className="flex items-start gap-3">
-                      <DollarSign className="text-emerald-400 shrink-0 mt-0.5" size={16} />
-                      <div>
-                        <span className="text-neutral-500 block mb-1 uppercase text-xs">Salary Projection</span>
-                        <span className="text-white font-medium">{milestone.salary}</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+                    <div className="space-y-6">
+                      <div className="flex items-start gap-4">
+                        <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          <DollarSign size={16} />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono text-neutral-500 uppercase block mb-1">Financial Power</span>
+                          <span className="text-white font-medium">{milestone.salary}</span>
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <Home className="text-cyan-400 shrink-0 mt-0.5" size={16} />
-                      <div>
-                        <span className="text-neutral-500 block mb-1 uppercase text-xs">Lifestyle</span>
-                        <span className="text-neutral-300">{milestone.lifestyle}</span>
+
+                      <div className="flex items-start gap-4">
+                        <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                          <MapPin size={16} />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono text-neutral-500 uppercase block mb-1">Base of Operations</span>
+                          <span className="text-neutral-300 leading-tight">{milestone.environment}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-4">
+                        <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                          <Heart size={16} />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono text-neutral-500 uppercase block mb-1">Life Outcome</span>
+                          <span className="text-neutral-300 leading-tight">{milestone.outcome}</span>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-3">
-                      <Briefcase className="text-purple-400 shrink-0 mt-0.5" size={16} />
-                      <div>
-                        <span className="text-neutral-500 block mb-1 uppercase text-xs">Environment</span>
-                        <span className="text-neutral-300">{milestone.environment}</span>
+                    <div className="space-y-6">
+                      <div className="flex items-start gap-4">
+                        <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                          <Home size={16} />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono text-neutral-500 uppercase block mb-1">Lifestyle</span>
+                          <span className="text-neutral-300 leading-tight">{milestone.lifestyle}</span>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-start gap-3 mt-2 pt-4 border-t border-white/10">
-                      <TrendingUp className="text-yellow-400 shrink-0 mt-0.5" size={16} />
-                      <div>
-                        <span className="text-neutral-500 block mb-1 uppercase text-xs">Key Growth</span>
-                        <span className="text-neutral-200 italic">{milestone.growth}</span>
+                      <div className="flex items-start gap-4">
+                        <div className="p-2 rounded-lg bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+                          <TrendingUp size={16} />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono text-neutral-500 uppercase block mb-1">Key Growth</span>
+                          <span className="text-neutral-300 leading-tight">{milestone.growth}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-4">
+                        <div className="p-2 rounded-lg bg-red-500/10 text-red-400 border border-red-500/20">
+                          <AlertCircle size={16} />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono text-neutral-500 uppercase block mb-1">Modern Challenge</span>
+                          <span className="text-neutral-300 leading-tight">{milestone.challenge}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Hover Glow Effect */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${milestone.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none`} />
+                  {/* Background Aura */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${milestone.color} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-700 pointer-events-none`} />
                 </motion.div>
               </motion.div>
             </div>

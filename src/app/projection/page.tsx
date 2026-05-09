@@ -5,15 +5,18 @@ import { GlowingButton } from "@/components/ui/glowing-button";
 import { motion } from "framer-motion";
 import { Sparkles, RotateCcw } from "lucide-react";
 import Link from "next/link";
+import { useUserStore } from "@/store/user-store";
 
 export default function ProjectionPage() {
+  const { name } = useUserStore();
+
   return (
     <div className="bg-[#050505] min-h-screen text-white font-sans overflow-x-hidden relative">
       {/* Dynamic Cinematic Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.15)_0%,transparent_70%)]" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(239,68,68,0.1)_0%,transparent_70%)]" />
-        <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-[radial-gradient(ellipse_at_right,rgba(16,185,129,0.05)_0%,transparent_70%)]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.2)_0%,transparent_70%)] animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(239,68,68,0.15)_0%,transparent_70%)]" />
+        <div className="absolute top-1/2 right-0 w-[900px] h-[900px] bg-[radial-gradient(ellipse_at_right,rgba(16,185,129,0.1)_0%,transparent_70%)]" />
       </div>
 
       <main className="relative z-10 flex flex-col items-center">
@@ -24,8 +27,8 @@ export default function ProjectionPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 mb-8 font-mono text-sm tracking-widest uppercase shadow-[0_0_20px_rgba(6,182,212,0.2)]">
-              <Sparkles size={16} /> Projection Initialized
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 mb-8 font-mono text-xs tracking-widest uppercase shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+              <Sparkles size={14} /> Projection Initialized for {name || "Agent"}
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold font-heading mb-6 tracking-tight leading-tight">
@@ -36,7 +39,7 @@ export default function ProjectionPage() {
             </h1>
             
             <p className="text-xl text-neutral-400 leading-relaxed font-light max-w-2xl mx-auto">
-              Based on your decisions, problem-solving approach, and psychological traits, the simulation has generated your most probable career trajectory.
+              Based on your unique Decision DNA and psychological traits, we&apos;ve projected the most probable evolution of your life as a <span className="text-white font-medium italic">Cybersecurity Architect</span>.
             </p>
           </motion.div>
         </section>
