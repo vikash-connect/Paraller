@@ -86,9 +86,9 @@ export default function SimulationPage() {
             </ul>
           </div>
 
-          <Link href="/">
+          <Link href="/projection">
             <GlowingButton className="w-full py-4 text-lg">
-              Return to Core Framework
+              View Future Projection
             </GlowingButton>
           </Link>
         </motion.div>
