@@ -314,9 +314,9 @@ export default function OnboardingPage() {
             <h1 className="text-4xl font-bold font-heading mb-4 text-white">
               <TypewriterEffect text={`Profile established, ${name}.`} speed={20} />
             </h1>
-            <p className="text-neutral-400 text-lg">
+            <div className="text-neutral-400 text-lg">
               <TypewriterEffect text="Initializing discovery sequence..." delay={1000} speed={20} />
-            </p>
+            </div>
           </div>
         );
     }

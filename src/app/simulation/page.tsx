@@ -157,13 +157,13 @@ export default function SimulationPage() {
               </div>
               
               <div className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md min-h-[160px] shadow-[inset_0_0_30px_rgba(255,255,255,0.02)]">
-                <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light italic opacity-90">
+                <div className="text-xl md:text-2xl text-neutral-300 leading-relaxed font-light italic opacity-90">
                   <TypewriterEffect 
                     text={currentScenarioIdx === 0 ? `${name || "Agent"}, the systems are compromised. ${scenario.description}` : scenario.description} 
                     speed={25} 
                     onComplete={handlePresentationComplete} 
                   />
-                </p>
+                </div>
               </div>
 
               {/* Step: Acknowledge Situation */}
@@ -261,9 +261,9 @@ export default function SimulationPage() {
                   </div>
                 </div>
 
-                <p className="text-xl md:text-2xl leading-relaxed text-white font-light italic mb-10 opacity-90">
+                <div className="text-xl md:text-2xl leading-relaxed text-white font-light italic mb-10 opacity-90">
                   <TypewriterEffect text={selectedChoice.consequence} speed={25} />
-                </p>
+                </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5">
                   <div className="px-4 py-2 bg-white/5 rounded-lg border border-white/10 font-mono text-[10px] tracking-widest text-neutral-400">
