@@ -8,7 +8,7 @@ import { GlowingButton } from "@/components/ui/glowing-button";
 import { Terminal, ChevronRight, User, BookOpen, GraduationCap, Target, Sparkles } from "lucide-react";
 import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 
-type Step = "INIT" | "NAME" | "CLASS" | "STREAM" | "CAREER" | "INTERESTS" | "COMPLETE";
+type Step = "INIT" | "NAME" | "NAME_CONFIRM" | "CLASS" | "STREAM" | "CAREER" | "INTERESTS" | "COMPLETE";
 
 const INTEREST_OPTIONS = [
   "Coding", "Design", "Business", "Security", "AI/ML", 
@@ -44,7 +44,7 @@ export default function OnboardingPage() {
     e.preventDefault();
     if (!tempInput.trim()) return;
     setName(tempInput.trim());
-    handleNext("CLASS");
+    handleNext("NAME_CONFIRM");
   };
 
   const handleCareerSubmit = (e: React.FormEvent) => {
@@ -78,30 +78,47 @@ export default function OnboardingPage() {
             <AIMentorBubble 
               message="Hi there. I'm your Parallel AI Guide. I'll help you discover which technology role truly fits your thinking style. First, what should I call you?"
               speed={25}
+              onComplete={() => setShowInput(true)}
             />
             <AnimatePresence>
               {showInput && (
                 <motion.form 
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                   onSubmit={handleNameSubmit} 
-                  className="flex flex-col gap-6"
+                  className="relative group"
                 >
-                  <input
-                    type="text"
-                    autoFocus
-                    value={tempInput}
-                    onChange={(e) => setTempInput(e.target.value)}
-                    placeholder="Enter your name"
-                    className="bg-transparent border-b-2 border-white/20 focus:border-cyan-400 outline-none px-2 py-4 text-2xl md:text-4xl text-white transition-colors w-full placeholder:text-white/10 font-light"
-                  />
-                  <div className="flex justify-end">
-                    <button type="submit" disabled={!tempInput.trim()} className="text-cyan-400 hover:text-cyan-300 disabled:opacity-30 flex items-center gap-2 font-mono text-lg transition-colors">
-                      Continue <ChevronRight size={20} />
-                    </button>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-2xl blur opacity-20 group-focus-within:opacity-50 transition duration-500" />
+                  <div className="relative flex flex-col gap-4 p-2 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-2xl">
+                    <input
+                      type="text"
+                      autoFocus
+                      value={tempInput}
+                      onChange={(e) => setTempInput(e.target.value)}
+                      placeholder="Enter your name..."
+                      className="bg-transparent outline-none px-4 py-4 text-xl md:text-2xl text-white placeholder:text-white/20 font-light"
+                    />
+                    {tempInput.trim() && (
+                      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-end p-2">
+                        <button type="submit" className="px-6 py-2 bg-white text-black rounded-xl font-bold flex items-center gap-2 hover:bg-neutral-200 transition-all text-sm uppercase tracking-widest">
+                          Continue <ChevronRight size={16} />
+                        </button>
+                      </motion.div>
+                    )}
                   </div>
                 </motion.form>
               )}
             </AnimatePresence>
+          </div>
+        );
+
+      case "NAME_CONFIRM":
+        return (
+          <div className="flex flex-col max-w-xl w-full gap-8">
+            <AIMentorBubble 
+              message={`It's a pleasure to meet you, ${name}. I'm initializing your neural profile now.`}
+              speed={25}
+              onComplete={() => setTimeout(() => handleNext("CLASS"), 1500)}
+            />
           </div>
         );
 
@@ -170,20 +187,25 @@ export default function OnboardingPage() {
                 <motion.form 
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                   onSubmit={handleCareerSubmit} 
-                  className="flex flex-col gap-6"
+                  className="relative group"
                 >
-                  <input
-                    type="text"
-                    autoFocus
-                    value={tempInput}
-                    onChange={(e) => setTempInput(e.target.value)}
-                    placeholder="e.g. Software Engineer, Doctor..."
-                    className="bg-transparent border-b-2 border-white/20 focus:border-purple-400 outline-none px-2 py-4 text-2xl md:text-4xl text-white transition-colors w-full placeholder:text-white/10 font-light"
-                  />
-                  <div className="flex justify-end">
-                    <button type="submit" disabled={!tempInput.trim()} className="text-purple-400 hover:text-purple-300 disabled:opacity-30 flex items-center gap-2 font-mono text-lg transition-colors">
-                      Continue <ChevronRight size={20} />
-                    </button>
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-20 group-focus-within:opacity-50 transition duration-500" />
+                  <div className="relative flex flex-col gap-4 p-2 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-2xl">
+                    <input
+                      type="text"
+                      autoFocus
+                      value={tempInput}
+                      onChange={(e) => setTempInput(e.target.value)}
+                      placeholder="e.g. Software Engineer, AI Specialist..."
+                      className="bg-transparent outline-none px-4 py-4 text-xl md:text-2xl text-white placeholder:text-white/20 font-light"
+                    />
+                    {tempInput.trim() && (
+                      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-end p-2">
+                        <button type="submit" className="px-6 py-2 bg-white text-black rounded-xl font-bold flex items-center gap-2 hover:bg-neutral-200 transition-all text-sm uppercase tracking-widest">
+                          Continue <ChevronRight size={16} />
+                        </button>
+                      </motion.div>
+                    )}
                   </div>
                 </motion.form>
               )}
