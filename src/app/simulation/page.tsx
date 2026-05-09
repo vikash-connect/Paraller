@@ -9,8 +9,9 @@ import { ShieldAlert, CheckCircle2, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useUserStore } from "@/store/user-store";
 import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
+import { AIReflectionPanel } from "@/components/ui/ai-reflection-panel";
 
-type Phase = "PRESENTATION" | "ACKNOWLEDGE" | "DECISION" | "PROCESSING" | "CONSEQUENCE" | "SUMMARY";
+type Phase = "PRESENTATION" | "ACKNOWLEDGE" | "DECISION" | "PROCESSING" | "CONSEQUENCE" | "REFLECTION" | "SUMMARY";
 
 export default function SimulationPage() {
   const { name } = useUserStore();
@@ -50,9 +51,19 @@ export default function SimulationPage() {
       setIsTypewriterComplete(false);
       setSelectedChoice(null);
     } else {
-      setPhase("SUMMARY");
+      setPhase("REFLECTION");
     }
   };
+
+  if (phase === "REFLECTION") {
+    return (
+      <AIReflectionPanel 
+        userName={name || "Agent"} 
+        traits={collectedTraits} 
+        onComplete={() => setPhase("SUMMARY")} 
+      />
+    );
+  }
 
   if (phase === "SUMMARY") {
     return (
