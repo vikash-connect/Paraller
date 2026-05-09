@@ -21,7 +21,7 @@ export default function Home() {
   const opacityHero = useTransform(scrollY, [0, 500], [1, 0]);
 
   return (
-    <div className="bg-black min-h-screen font-sans selection:bg-primary/30 selection:text-primary-foreground overflow-x-hidden">
+    <div className="bg-black min-h-screen font-sans selection:bg-primary/30 selection:text-primary-foreground overflow-x-hidden pt-20">
       {/* Hero Section */}
       <AuroraBackground className="min-h-screen">
         <FloatingParticles />

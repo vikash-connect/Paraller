@@ -20,6 +20,8 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  if (isOnboarding) return null;
+
   return (
     <motion.nav
       initial={{ y: -100 }}
