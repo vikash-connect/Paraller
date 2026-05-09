@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useUserStore } from "@/store/user-store";
 
@@ -15,13 +15,18 @@ export function TypewriterEffect({ text, speed = 30, delay = 0, onComplete, clas
   const { isDemoMode } = useUserStore();
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const lastProcessedText = useRef("");
   
   // Speed up typing in demo mode
   const effectiveSpeed = isDemoMode ? Math.max(1, speed / 4) : speed;
 
   useEffect(() => {
-    // Reset state when text changes
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // Prevent double-typing if the text is exactly the same as what we just typed
+    if (text === lastProcessedText.current && displayedText === text) {
+      return;
+    }
+
+    lastProcessedText.current = text;
     setDisplayedText("");
     setIsTyping(false);
 
@@ -50,9 +55,9 @@ export function TypewriterEffect({ text, speed = 30, delay = 0, onComplete, clas
 
     return () => {
       clearTimeout(delayId);
-      clearInterval(timeoutId as unknown as number);
+      if (timeoutId) clearInterval(timeoutId as unknown as number);
     };
-  }, [text, speed, delay, onComplete]);
+  }, [text, delay, onComplete, effectiveSpeed, displayedText]);
 
   return (
     <span className={className}>
