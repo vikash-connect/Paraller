@@ -6,6 +6,7 @@ import { useUserStore } from "@/store/user-store";
 import { TypewriterEffect } from "@/components/ui/typewriter-effect";
 import { GlowingButton } from "@/components/ui/glowing-button";
 import { Terminal, ChevronRight, User, BookOpen, GraduationCap, Target, Sparkles } from "lucide-react";
+import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 
 type Step = "INIT" | "NAME" | "CLASS" | "STREAM" | "CAREER" | "INTERESTS" | "COMPLETE";
 
@@ -73,13 +74,11 @@ export default function OnboardingPage() {
 
       case "NAME":
         return (
-          <div className="flex flex-col max-w-xl w-full">
-            <div className="flex items-center gap-3 mb-8 text-neutral-400 font-mono text-sm">
-              <User size={16} /> SYSTEM_QUERY_01
-            </div>
-            <h1 className="text-3xl md:text-5xl font-heading font-bold mb-12">
-              <TypewriterEffect text="What should we call you?" speed={20} onComplete={() => setShowInput(true)} />
-            </h1>
+          <div className="flex flex-col max-w-xl w-full gap-8">
+            <AIMentorBubble 
+              message="Hi there. I'm your Parallel AI Guide. I'll help you discover which technology role truly fits your thinking style. First, what should I call you?"
+              speed={25}
+            />
             <AnimatePresence>
               {showInput && (
                 <motion.form 
@@ -108,13 +107,12 @@ export default function OnboardingPage() {
 
       case "CLASS":
         return (
-          <div className="flex flex-col max-w-xl w-full">
-            <div className="flex items-center gap-3 mb-8 text-neutral-400 font-mono text-sm">
-              <BookOpen size={16} /> SYSTEM_QUERY_02
-            </div>
-            <h1 className="text-3xl md:text-5xl font-heading font-bold mb-12 leading-tight">
-              <TypewriterEffect text={`Hi ${name}. Let's explore your future. What class are you currently in?`} speed={20} onComplete={() => setShowInput(true)} />
-            </h1>
+          <div className="flex flex-col max-w-xl w-full gap-8">
+            <AIMentorBubble 
+              message={`It's a pleasure to meet you, ${name}. To tailor your experience, I need to know your current academic level.`}
+              speed={25}
+              onComplete={() => setShowInput(true)}
+            />
             <AnimatePresence>
               {showInput && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-2 gap-4">
@@ -135,13 +133,12 @@ export default function OnboardingPage() {
 
       case "STREAM":
         return (
-          <div className="flex flex-col max-w-xl w-full">
-            <div className="flex items-center gap-3 mb-8 text-neutral-400 font-mono text-sm">
-              <GraduationCap size={16} /> SYSTEM_QUERY_03
-            </div>
-            <h1 className="text-3xl md:text-5xl font-heading font-bold mb-12">
-              <TypewriterEffect text="Which stream have you chosen?" speed={20} onComplete={() => setShowInput(true)} />
-            </h1>
+          <div className="flex flex-col max-w-xl w-full gap-8">
+            <AIMentorBubble 
+              message={`Understood. And which academic stream are you pursuing, ${name}? This helps me understand your foundational strengths.`}
+              speed={25}
+              onComplete={() => setShowInput(true)}
+            />
             <AnimatePresence>
               {showInput && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -162,13 +159,12 @@ export default function OnboardingPage() {
 
       case "CAREER":
         return (
-          <div className="flex flex-col max-w-xl w-full">
-            <div className="flex items-center gap-3 mb-8 text-neutral-400 font-mono text-sm">
-              <Target size={16} /> SYSTEM_QUERY_04
-            </div>
-            <h1 className="text-3xl md:text-5xl font-heading font-bold mb-12 leading-tight">
-              <TypewriterEffect text="What is your dream career field right now?" speed={20} onComplete={() => setShowInput(true)} />
-            </h1>
+          <div className="flex flex-col max-w-xl w-full gap-8">
+            <AIMentorBubble 
+              message={`We all have a vision of the future. ${name}, what is your dream career field at this moment?`}
+              speed={25}
+              onComplete={() => setShowInput(true)}
+            />
             <AnimatePresence>
               {showInput && (
                 <motion.form 
@@ -197,16 +193,12 @@ export default function OnboardingPage() {
 
       case "INTERESTS":
         return (
-          <div className="flex flex-col max-w-2xl w-full">
-            <div className="flex items-center gap-3 mb-8 text-neutral-400 font-mono text-sm">
-              <Sparkles size={16} /> SYSTEM_QUERY_05
-            </div>
-            <h1 className="text-3xl md:text-5xl font-heading font-bold mb-4 leading-tight">
-              <TypewriterEffect text="Select up to 3 core interests." speed={20} onComplete={() => setShowInput(true)} />
-            </h1>
-            <p className="text-neutral-500 mb-8 min-h-[24px]">
-              {showInput && "This helps us tailor your simulation."}
-            </p>
+          <div className="flex flex-col max-w-2xl w-full gap-8">
+            <AIMentorBubble 
+              message={`Last question for now, ${name}. Tell me what excites you. Select up to 3 core interests to help me tailor your discovery simulation.`}
+              speed={25}
+              onComplete={() => setShowInput(true)}
+            />
             <AnimatePresence>
               {showInput && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-10">
@@ -236,7 +228,7 @@ export default function OnboardingPage() {
                       }}
                       disabled={interests.length === 0}
                     >
-                      Generate Profile <ChevronRight size={18} className="ml-2 inline" />
+                      Finalise Profile <ChevronRight size={18} className="ml-2 inline" />
                     </GlowingButton>
                   </div>
                 </motion.div>

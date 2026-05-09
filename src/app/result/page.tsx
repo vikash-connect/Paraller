@@ -7,6 +7,7 @@ import { GlowingButton } from "@/components/ui/glowing-button";
 import { ShieldAlert, Zap, Cpu, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useUserStore } from "@/store/user-store";
+import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -90,15 +91,24 @@ export default function ResultPage() {
           {/* Right Column: Insights & CTA */}
           <div className="lg:col-span-7 flex flex-col gap-8">
             <motion.div variants={itemVariants} className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
-              <h3 className="text-xl font-bold font-heading mb-4 text-white flex items-center gap-2">
+              <h3 className="text-xl font-bold font-heading mb-6 text-white flex items-center gap-2">
                 <Cpu className="text-primary" size={24} /> Personality Insights
               </h3>
-              <p className="text-lg text-neutral-300 leading-relaxed mb-6">
-                “{name ? `${name}, your` : 'Your'} decision-making style shows <strong className="text-white">strong analytical and investigative tendencies</strong>. You thrive in high-stakes environments where logical deduction and system-level thinking are required to solve complex, hidden problems.”
-              </p>
               
-              <div className="mt-8">
-                <h4 className="text-sm font-mono text-neutral-500 mb-4 uppercase">Skills Alignment</h4>
+              <div className="flex flex-col gap-8">
+                <p className="text-lg text-neutral-300 leading-relaxed">
+                  “{name ? `${name}, your` : 'Your'} decision-making style shows <strong className="text-white">strong analytical and investigative tendencies</strong>. You thrive in high-stakes environments where logical deduction and system-level thinking are required to solve complex, hidden problems.”
+                </p>
+
+                <AIMentorBubble 
+                  message={`Based on your simulation data, ${name || 'Agent'}, I see a natural aptitude for defensive strategy. Your focus on precision over panic is exactly what the future of global security requires.`}
+                  speed={25}
+                  className="bg-primary/5 border-primary/20"
+                />
+              </div>
+              
+              <div className="mt-10 pt-10 border-t border-white/5">
+                <h4 className="text-sm font-mono text-neutral-500 mb-4 uppercase tracking-widest">Skills Alignment</h4>
                 <div className="flex flex-wrap gap-3">
                   {["Threat Analysis", "Ethical Hacking", "Cryptography", "Network Security", "Incident Response"].map((skill, i) => (
                     <motion.span 

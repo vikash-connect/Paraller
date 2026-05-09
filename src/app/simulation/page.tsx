@@ -8,6 +8,7 @@ import { GlowingButton } from "@/components/ui/glowing-button";
 import { ShieldAlert, CheckCircle2, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useUserStore } from "@/store/user-store";
+import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 
 type Phase = "PRESENTATION" | "ACKNOWLEDGE" | "DECISION" | "PROCESSING" | "CONSEQUENCE" | "SUMMARY";
 
@@ -169,24 +170,32 @@ export default function SimulationPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="grid grid-cols-1 gap-4 mt-8"
+                  className="flex flex-col gap-10 mt-8"
                 >
-                  {scenario.choices.map((choice, idx) => (
-                    <motion.button
-                      key={choice.id}
-                      onClick={() => handleChoiceSelect(choice)}
-                      whileHover={{ scale: 1.01, x: 10 }}
-                      whileTap={{ scale: 0.99 }}
-                      className="p-6 text-left border border-white/10 rounded-2xl bg-white/5 hover:border-cyan-500/50 hover:bg-white/10 transition-all duration-300 group flex items-center gap-6"
-                    >
-                      <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center font-mono text-xs text-neutral-500 group-hover:border-cyan-500 group-hover:text-cyan-400">
-                        0{idx + 1}
-                      </div>
-                      <span className="text-lg font-medium text-white group-hover:text-cyan-300 transition-colors">
-                        {choice.text}
-                      </span>
-                    </motion.button>
-                  ))}
+                  <AIMentorBubble 
+                    message={`Analyze the vectors, ${name}. Every decision carries a consequence for the infrastructure. What is your response?`}
+                    speed={25}
+                    className="max-w-xl mx-auto"
+                  />
+
+                  <div className="grid grid-cols-1 gap-4">
+                    {scenario.choices.map((choice, idx) => (
+                      <motion.button
+                        key={choice.id}
+                        onClick={() => handleChoiceSelect(choice)}
+                        whileHover={{ scale: 1.01, x: 10 }}
+                        whileTap={{ scale: 0.99 }}
+                        className="p-6 text-left border border-white/10 rounded-2xl bg-white/5 hover:border-cyan-500/50 hover:bg-white/10 transition-all duration-300 group flex items-center gap-6"
+                      >
+                        <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center font-mono text-xs text-neutral-500 group-hover:border-cyan-500 group-hover:text-cyan-400">
+                          0{idx + 1}
+                        </div>
+                        <span className="text-lg font-medium text-white group-hover:text-cyan-300 transition-colors">
+                          {choice.text}
+                        </span>
+                      </motion.button>
+                    ))}
+                  </div>
                 </motion.div>
               )}
             </motion.div>

@@ -10,8 +10,11 @@ import { CTASection } from "@/components/cta-section";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { useUserStore } from "@/store/user-store";
+import { AIMentorBubble } from "@/components/ui/ai-mentor-bubble";
 
 export default function Home() {
+  const { name } = useUserStore();
   const { scrollY } = useScroll();
   const yHeroText = useTransform(scrollY, [0, 1000], [0, 400]);
   const opacityHero = useTransform(scrollY, [0, 500], [1, 0]);
@@ -25,6 +28,19 @@ export default function Home() {
           style={{ y: yHeroText, opacity: opacityHero }}
           className="relative flex flex-col gap-6 items-center justify-center px-4 text-center z-10 w-full"
         >
+          {name && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.8 }}
+              className="mb-8 w-full max-w-lg"
+            >
+              <AIMentorBubble 
+                message={`Welcome back, ${name}. Your future timeline is waiting for its next decision. Ready to resume the simulation?`}
+                speed={25}
+              />
+            </motion.div>
+          )}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
